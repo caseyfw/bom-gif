@@ -9,30 +9,30 @@ use Intervention\Image\ImageManagerStatic as Image;
 const EPOCH_PERIOD = 6;
 
 $debug = boolval(param('debug'));
-$noCache = boolval(param('noCache'));
+$cache = boolval(param('cache'));
 $frames = intval(param('frames', '10'));
 $radarId = param('radarId', 'IDR664');
 $cacheDir = param('cacheDir', 'cache/');
-debug('? debug = '.strval($debug));
-debug('? noCache = '.false);
-debug('? frames = '.strval($frames));
+debug('? debug = '.intval($debug));
+debug('? cache = '.intval($cache));
+debug('? frames = '.intval($frames));
 debug('? radarId = '.strval($radarId));
 debug('? cacheDir = '.strval($cacheDir));
 
 $epochs = getEpochs(date_create('now', timezone_open('Etc/UCT')), $frames);
 $gifPath = $cacheDir.implode('.', [$radarId, $epochs[0]->format('YmdHi'), $frames, 'gif']);
 
-if (!file_exists($gifPath) || $noCache) {
+if (!file_exists($gifPath) || !$cache) {
     debug("! Cache miss for gif.");
     // Create composite background image if it doesn't already exist.
-    if (!file_exists($cacheDir.$radarId.'.composite-background.png') || $noCache) {
+    if (!file_exists($cacheDir.$radarId.'.composite-background.png') || !$cache) {
         debug("! Cache miss for background image.");
         // If any of the required background images are not present, fetch them.
         if (
             !file_exists($cacheDir.$radarId.'.background.png') ||
             !file_exists($cacheDir.$radarId.'.topography.png') ||
             !file_exists($cacheDir.$radarId.'.locations.png') ||
-            $noCache
+            $cache
         ) {
             debug("! Cache miss for source background images.");
             $baseUrl = 'http://m.bom.gov.au/products/radar_transparencies/';
@@ -59,10 +59,10 @@ if (!file_exists($gifPath) || $noCache) {
         $compositeFilename = $radarId.'.T.'.$epoch->format('YmdHi').'.composite.png';
 
         // Generate composite radar image with background if it doesn't exist.
-        if (!file_exists($cacheDir.$compositeFilename) || $noCache) {
+        if (!file_exists($cacheDir.$compositeFilename) || !$cache) {
 
             // Fetch radar image if it doesn't exist.
-            if (!file_exists($cacheDir.$filename) || $noCache) {
+            if (!file_exists($cacheDir.$filename) || !$cache) {
                 if (!fetchFile($url, $cacheDir.$filename)) {
                     // If fetching image fails, just ignore it.
                     continue;
