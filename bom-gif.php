@@ -131,10 +131,10 @@ function param(string $name, $default = false)
     if (getenv($name)) {
         return getenv($name);
     }
-    if (array_key_exists('name', $_GET)) {
+    if (array_key_exists($name, $_GET)) {
         return $_GET[$name];
     }
-    if (array_key_exists('name', $_POST)) {
+    if (array_key_exists($name, $_POST)) {
         return $_POST[$name];
     }
     return $default;
