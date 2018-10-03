@@ -1,6 +1,7 @@
 <?php
 
-// Fetch last 10 images.
+// BOM now deny agents that don't look like browsers.
+ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
 
 require_once('vendor/autoload.php');
 
