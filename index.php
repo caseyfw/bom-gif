@@ -12,7 +12,7 @@ const EPOCH_PERIOD = 6;
 $debug = boolval(param('debug'));
 $cache = boolval(param('cache'));
 $frames = intval(param('frames', '10'));
-$radarId = param('radarId', 'IDR664');
+$radarId = param('radarId', 'IDR503');
 $cacheDir = param('cacheDir', 'cache/');
 debug('? debug = '.intval($debug));
 debug('? cache = '.intval($cache));
@@ -66,6 +66,7 @@ if (!file_exists($gifPath) || !$cache) {
             if (!file_exists($cacheDir.$filename) || !$cache) {
                 if (!fetchFile($url, $cacheDir.$filename)) {
                     // If fetching image fails, just ignore it.
+                    debug('! Fetching image file failed.');
                     continue;
                 };
             }
@@ -74,8 +75,10 @@ if (!file_exists($gifPath) || !$cache) {
                 ->save($cacheDir.$compositeFilename);
         }
         $imageFiles[] = $cacheDir.$compositeFilename;
+        debug('? imageFile = ' . $cacheDir.$compositeFilename);
     }
     $fileListPath = tempnam('/tmp', 'bom-gif-image-files-list');
+    debug('? fileListPath = ' . $fileListPath);
     file_put_contents($fileListPath, implode("\n", $imageFiles));
 
     // @todo Deal with errors.
