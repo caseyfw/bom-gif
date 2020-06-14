@@ -46,7 +46,6 @@ if (!file_exists($gifPath) || !$cache) {
         debug("> Building composite background image.");
         $composite = Image::make($cacheDir.$radarId.'.background.png')
             ->insert($cacheDir.$radarId.'.topography.png')
-            ->insert($cacheDir.$radarId.'.locations.png')
             ->save($cacheDir.$radarId.'.composite-background.png');
     }
 
@@ -72,6 +71,7 @@ if (!file_exists($gifPath) || !$cache) {
             }
             $compositeRadarImage = Image::make($cacheDir.$radarId.'.composite-background.png')
                 ->insert($cacheDir.$filename)
+                ->insert($cacheDir.$radarId.'.locations.png')
                 ->save($cacheDir.$compositeFilename);
         }
         $imageFiles[] = $cacheDir.$compositeFilename;
