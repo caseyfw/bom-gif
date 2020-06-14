@@ -12,7 +12,7 @@ const EPOCH_PERIOD = 6;
 $debug = boolval(param('debug'));
 $cache = boolval(param('cache'));
 $frames = intval(param('frames', '10'));
-$radarId = param('radarId', 'IDR503');
+$radarId = param('radarId', 'IDR663');
 $cacheDir = param('cacheDir', 'cache/');
 debug('? debug = '.intval($debug));
 debug('? cache = '.intval($cache));
@@ -36,7 +36,7 @@ if (!file_exists($gifPath) || !$cache) {
             $cache
         ) {
             debug("! Cache miss for source background images.");
-            $baseUrl = 'http://m.bom.gov.au/products/radar_transparencies/';
+            $baseUrl = 'http://www.bom.gov.au/products/radar_transparencies/';
             if (!(fetchFile($baseUrl.$radarId.'.background.png', $cacheDir.$radarId.'.background.png') &&
                 fetchFile($baseUrl.$radarId.'.topography.png', $cacheDir.$radarId.'.topography.png') &&
                 fetchFile($baseUrl.$radarId.'.locations.png', $cacheDir.$radarId.'.locations.png'))) {
@@ -56,7 +56,7 @@ if (!file_exists($gifPath) || !$cache) {
     foreach($epochs as $epoch) {
         debug("> Building composite background image.");
         $filename = $radarId.'.T.'.$epoch->format('YmdHi').'.png';
-        $url = 'http://m.bom.gov.au/radar/'.$filename;
+        $url = 'http://www.bom.gov.au/radar/'.$filename;
         $compositeFilename = $radarId.'.T.'.$epoch->format('YmdHi').'.composite.png';
 
         // Generate composite radar image with background if it doesn't exist.
