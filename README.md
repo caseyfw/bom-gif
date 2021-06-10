@@ -14,7 +14,7 @@ You may want to change some of the params at the top of `bom-gif.php`.
 You can make a gif via the command line:
 
 ```bash
-$ php bom-gif.php > bom.gif
+$ php index.php > bom.gif
 ```
 
 Alternatively, you can serve the script via a web server and see the results in
